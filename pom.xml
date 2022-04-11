@@ -16,12 +16,13 @@
     <maven.compiler.source>3.8.5</maven.compiler.source>
     <maven.compiler.target>3.8.5</maven.compiler.target>
     <exec.mainClass>com.example.Main</exec.mainClass>
+    <telegrambots-spring.version>0.22</telegrambots-spring.version>
 </properties>
 <dependencies>
     <dependency>
-        <groupId>org.telegram</groupId>
-        <artifactId>telegrambots</artifactId>
-        <version>5.7.1</version>
+        <groupId>com.github.xabgesagtx</groupId>
+        <artifactId>telegram-spring-boot-starter</artifactId>
+        <version>${telegrambots-spring.version}</version>
     </dependency>
     <dependency>
         <groupId>org.springframework.boot</groupId>
