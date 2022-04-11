@@ -10,7 +10,7 @@ public class Bot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         return "imet_spbstu_bot";
-    }
+    } //must be refactored
 
     @Override
     public String getBotToken() {
