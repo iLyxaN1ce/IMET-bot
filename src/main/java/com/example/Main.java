@@ -24,7 +24,7 @@ public class Main {
 
     @GetMapping
     public String hello() {
-        return "Polina idi pisai";
+        return "Init";
     }
 
 }
