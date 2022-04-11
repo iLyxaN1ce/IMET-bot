@@ -23,6 +23,7 @@ public class Bot extends TelegramLongPollingBot {
         if (message != null && message.hasText()) {
             switch (message.getText()) {
                 case "/contacts":
+                    //ну тут бля ахуительный форк - ты с маги или с баки, но пока тут абоба и не ибёт
                     sendMsg(message, "Абоба");
                     System.out.println(message.getText());
                     break;
