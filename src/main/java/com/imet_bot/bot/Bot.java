@@ -71,7 +71,7 @@ public class Bot extends TelegramLongPollingBot {
         return "imet_spbstu_bot"; //не работает @Value, я не знаю причину
     }
 
-    @PostConstruct
+
     @Override
     public String getBotToken() {
         return "5103976032:AAGYp-oLmW96829PHXf55UpbzUIYP5CaoyM"; //ну поменяем токен чуть что
