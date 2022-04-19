@@ -7,6 +7,7 @@ import com.example.employee.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -19,9 +20,13 @@ import java.util.Optional;
 @Component
 public class Bot extends TelegramLongPollingBot {
 
-    @Autowired
-    private EmployeeController employeeController;
 
+    private final EmployeeService employeeService;
+
+    public Bot(TelegramBotsApi telegramBotsApi, EmployeeService employeeService) throws TelegramApiException {
+        this.employeeService = employeeService;
+        telegramBotsApi.registerBot(this);
+    }
     @Override
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
@@ -29,8 +34,8 @@ public class Bot extends TelegramLongPollingBot {
         if (message != null && message.hasText()) {
             switch (message.getText()) {
                 case "/b":
-                      List<Employee> employeesList = employeeController.getEmployees();
-                      for (Employee i : employeesList) {
+                      List<Employee> employeesList1 = employeeService.getEmployees();
+                      for (Employee i : employeesList1) {
                           if (i.getContingent().equals("бакалавриат")) {
                               sendMsg(message, i.toString());
                           }
@@ -38,6 +43,12 @@ public class Bot extends TelegramLongPollingBot {
                     System.out.println(message.getText());
                     break;
                 case "/m":
+                    List<Employee> employeesList2 = employeeService.getEmployees();
+                    for (Employee i : employeesList2) {
+                        if (i.getContingent().equals("магистратура")) {
+                            sendMsg(message, i.toString());
+                        }
+                    }
                     System.out.println(message.getText());
                     break;
                 default:
