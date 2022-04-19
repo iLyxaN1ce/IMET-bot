@@ -1,4 +1,4 @@
-package com.example.employee;
+package com.imet_bot.employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,11 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public List<Employee> getEmployees() {
-        return employeeRepository.findAll();
+    public List<Employee> getEmployeesBachelor() {
+        return employeeRepository.employeeByContingentBachelor();
+    }
+
+    public List<Employee> getEmployeesMaster() {
+        return employeeRepository.employeeByContingentMaster();
     }
 }

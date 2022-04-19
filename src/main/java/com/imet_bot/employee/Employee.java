@@ -1,4 +1,4 @@
-package com.example.employee;
+package com.imet_bot.employee;
 
 import javax.persistence.*;
 
@@ -107,16 +107,8 @@ public class Employee {
     }
 
     @Override
-    public String  toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", contingent='" + contingent + '\'' +
-                ", position='" + position + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", address='" + address + '\'' +
-                ", contacts='" + contacts + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+    public String toString() {
+        return fullName + '\n' + position + '\n' + "\nКонтакты:\n" + contacts + '\n' + email;
     }
 }
 
