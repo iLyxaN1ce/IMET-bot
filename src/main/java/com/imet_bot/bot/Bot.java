@@ -67,12 +67,12 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "imet_spbstu_bot"; //не работает @Value, я не знаю причину
+        return "imet_spbstu_bot"; 
     }
 
 
     @Override
     public String getBotToken() {
-        return "5103976032:AAGYp-oLmW96829PHXf55UpbzUIYP5CaoyM"; //ну поменяем токен чуть что
+        return "5103976032:AAGYp-oLmW96829PHXf55UpbzUIYP5CaoyM";
     }
 }
