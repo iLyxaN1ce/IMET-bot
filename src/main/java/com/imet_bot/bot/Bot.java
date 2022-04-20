@@ -18,11 +18,12 @@ import java.util.List;
 @Component
 public class Bot extends TelegramLongPollingBot {
 
-//    @Value("${bot.name}")
-//    private String botUsername;
-//
-//    @Value("${spring.mail.host}")
-//    private String botToken;
+    //application.yaml
+    @Value("${bot.name}")
+    private String botUsername;
+
+    @Value("${bot.token}")
+    private String botToken;
 
     private final EmployeeService employeeService;
 
@@ -67,12 +68,12 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "imet_spbstu_bot"; 
+        return botUsername; 
     }
 
 
     @Override
     public String getBotToken() {
-        return "5103976032:AAGYp-oLmW96829PHXf55UpbzUIYP5CaoyM";
+        return botToken;
     }
 }
