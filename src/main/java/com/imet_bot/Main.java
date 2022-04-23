@@ -14,22 +14,9 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 @SpringBootApplication
 public class Main {
-    private final Bot bot;
-
-    Main(Bot bot) {
-        this.bot = bot;
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
-    }
-
-    @Bean
-    public CommandLineRunner commandLineRunner() {
-        return args -> {
-            TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-            botsApi.registerBot(bot);
-        };
     }
 
 }
