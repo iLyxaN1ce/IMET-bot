@@ -1,21 +1,19 @@
 package com.imet_bot.bot;
 
-import com.imet_bot.employee.EmployeeService;
+import com.imet_bot.command.Command;
+import com.imet_bot.command.CommandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+import java.util.Optional;
 
 @Component
 public class Bot extends TelegramLongPollingBot {
@@ -27,42 +25,11 @@ public class Bot extends TelegramLongPollingBot {
     @Value("${bot.token}")
     private String botToken;
 
-    private final ExecutableCommandExecutor executableCommandExecutor;
-    private final QueryCommandExecutor queryCommandExecutor;
+    private final CommandRepository commandRepository;
 
     @Autowired
-    public Bot(ExecutableCommandExecutor executableCommandExecutor,
-               QueryCommandExecutor queryCommandExecutor) {
-        this.executableCommandExecutor = executableCommandExecutor;
-        this.queryCommandExecutor = queryCommandExecutor;
-    }
-
-    private List<Update> replyAndFilterNonCommands(List<Update> updates) {
-        List<Update> commandUpdates = new ArrayList<>();
-
-        for (Update u: updates) {
-            String messageText = u.getMessage().getText();
-            boolean isCommand = ExecutableCommandExecutor.isExecutableCommand(messageText) ||
-                    QueryCommandExecutor.isQueryCommand(messageText);
-
-            if (!isCommand) {
-                sendMsg(u.getMessage(), Collections.singletonList("Нет такой команды"));
-            } else {
-                commandUpdates.add(u);
-            }
-        }
-
-        return commandUpdates;
-    }
-
-    private List<Update> replyAndFilterExecutableCommands(List<Update> updates) {
-        return updates;
-    }
-
-    private void executeQueryCommands(List<Update> updates) {
-        for (Update u: updates) {
-            queryCommandExecutor.execute(this, u);
-        }
+    public Bot(CommandRepository commandRepository) {
+        this.commandRepository = commandRepository;
     }
 
     @Override
@@ -71,9 +38,16 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdatesReceived(List<Update> updates) {
-        List<Update> commandUpdates = replyAndFilterNonCommands(updates);
-        List<Update> queryUpdates = replyAndFilterExecutableCommands(commandUpdates);
-        executeQueryCommands(queryUpdates);
+        for (Update u: updates) {
+            Message message = u.getMessage();
+            Optional<Command> command = commandRepository.getCommandByText(message.getText());
+            if (command.isEmpty()) {
+                sendMsg(message, Collections.singletonList("Нет такой команды"));
+            } else {
+                String response = command.get().getResponse();
+                sendMsg(message, Collections.singletonList(response));
+            }
+        }
     }
 
     public void sendMsg(Message message, List<?> text) {
@@ -93,7 +67,6 @@ public class Bot extends TelegramLongPollingBot {
     public String getBotUsername() {
         return botUsername; 
     }
-
 
     @Override
     public String getBotToken() {
