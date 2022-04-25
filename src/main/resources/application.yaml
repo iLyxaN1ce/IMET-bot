@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      uri: //on Trello
+bot:
+  name: imet_bot
+  token: //on Trello
