@@ -40,7 +40,7 @@ db.createCollection("employees", {
                "bsonType": "array",
                "items": {
                   "bsonType": "object",
-                  "required": [ "address", "contacts", "contingent", "email", "fullName", "position" ],
+                  "required": [ "address", "contacts", "email", "fullName", "position" ],
                   "properties": {
                      "address": {
                         "bsonType": "string" 
@@ -48,9 +48,6 @@ db.createCollection("employees", {
                      "contacts": {
                         "bsonType": "string" 
                      },
-                     "contingent": {
-                        "bsonType": "string"
-                     }, 
                      "email": {
                         "bsonType": "string"
                      },

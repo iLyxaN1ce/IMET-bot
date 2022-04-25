@@ -163,4 +163,11 @@ db.command.insertOne({
   "nextCommand": []
 });
 
+db.command.insertOne({
+  "text": "/otvet",
+  "responseType": "com.imet_bot.entities.StringObject",
+  "responseBody": {"value": "Ответ"},
+  "nextCommand": []
+});
+
 
