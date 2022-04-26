@@ -1,6 +1,14 @@
 conn = new Mongo();
 db = conn.getDB("imet-db");
 
+const pwd = _getEnv("MONGO_PWD")
+
+db.createUser({
+  user: "aapozd",
+  pwd: pwd,
+  roles: [ "dbOwner" ]
+})
+
 db.createCollection("command", {
   "validator": {
      "$jsonSchema": {

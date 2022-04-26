@@ -1,0 +1,24 @@
+version: "3.5"
+
+services:
+    imetmongo:
+        container_name: imetmongo
+        image: mongo:4.4.13
+        ports:
+            - "27017:27017"
+        environment:
+            MONGO_INITDB_DATABASE: imet-db
+            MONGO_INITDB_ROOT_USERNAME: aapozd
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PWD}
+            MONGO_PWD: ${MONGO_PWD}
+        volumes:
+            - ./home/mongodb:/home/mongodb
+            - ./mongo-scripts:/docker-entrypoint-initdb.d
+    imetbot:
+        container_name: imetbot
+        image: aapozd/imet-bot:latest
+        environment:
+            TOKEN: ${TOKEN}
+            MONGO_PWD: ${MONGO_PWD}
+            DB_IP: imetmongo
+
