@@ -6,3 +6,4 @@ RUN cd /tmp && \
 
 FROM openjdk:17-oracle
 COPY --from=builder /tmp/target/imet-spbstu-bot.jar /app/imet-spbstu-bot.jar
+CMD java -jar /app/imet-spbstu-bot.jar

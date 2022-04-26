@@ -1,5 +1,5 @@
 docker-build:
-	docker build . -t aapozd/imet-bot:latest
+	docker build application -t aapozd/imet-bot:latest
 
 docker-push:
 	docker push aapozd/imet-bot:latest
