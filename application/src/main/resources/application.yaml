@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://aapozd:${MONGO_PWD}@${DB_IP}:27017/imet-db
+bot:
+  name: imet_bot
+  token: ${TOKEN}
