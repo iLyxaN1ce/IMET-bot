@@ -2,12 +2,14 @@ docker-app-build:
 	docker build application -t aapozd/imet-bot:latest
 
 docker-mongo-build:
-	docker build mongo -t aapozd/imet-mongo:latest
+	docker build mongo -t aapozd/imet-mongo:latest 
+
+docker-build: docker-app-build docker-mongo-build
 
 docker-compose-up:
 	docker-compose -f docker-compose.yml up -d
 
-docker-mongo-fix:
-	mkdir -p mongo/home/mongodb
-	touch mongo/home/mongodb/.dbshell
-	chown -R 999:999 mongo/home/mongodb
+docker-push:
+	docker push aapozd/imet-bot:latest
+	docker push aapozd/imet-mongo:latest
+

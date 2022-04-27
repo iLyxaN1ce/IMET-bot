@@ -11,8 +11,6 @@ services:
             MONGO_INITDB_ROOT_USERNAME: aapozd
             MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PWD}
             MONGO_PWD: ${MONGO_PWD}
-        volumes:
-            - ./mongo/home/mongodb:/home/mongodb
     imetbot:
         container_name: imetbot
         image: aapozd/imet-bot:latest
