@@ -1,7 +1,13 @@
 conn = new Mongo();
 db = conn.getDB("imet-db");
 
-const pwd = _getEnv("MONGO_PWD")
+const pwd = _getEnv("MONGO_PWD");
+
+var collectionNames = ["command", "employees"]
+for(var i = 0, len = collectionNames.length; i < len ; i++) {
+   var collectionName = collectionNames[i]
+   db[collectionName].drop();
+}
 
 db.createUser({
   user: "aapozd",
