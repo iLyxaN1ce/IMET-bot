@@ -190,3 +190,17 @@ db.command.insertOne({
   "responseBody": {"value": "Список доступных команд: \n/b - контакты дирекции бакалавриата/специалитета \n/m - контакты дирекции магистратуры/аспирантуры \n/documents - информация о порядке подачи и визирования заявлений студентов \n/international - информация об академической мобильности \n/contingent - положение о движении контингента обучающихся \n/reglament - регламент функционирования личного кабинета обучающегося"},
   "nextCommand": []
 });
+
+db.command.insertOne({
+  "text": "/reglament",
+  "responseType": "com.imet_bot.entities.StringObject",
+  "responseBody": {"value": "https://dep.spbstu.ru/userfiles/files/prev/docs/general/reglament_lko_2018.pdf"},
+  "nextCommand": []
+});
+
+db.command.insertOne({
+  "text": "/contingent",
+  "responseType": "com.imet_bot.entities.StringObject",
+  "responseBody": {"https://dep.spbstu.ru/userfiles/files/prev/docs/for_students/pol_o_suos_16_06_2017.pdf"},
+  "nextCommand": []
+});
