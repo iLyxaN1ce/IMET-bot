@@ -4,11 +4,15 @@ pipeline {
     environment {
         TOKEN = credentials('TOKEN')
         MONGO_PWD = credentials('MONGO_PWD')
+        PDATA = '/data'
     }
     
     stages {
         stage('Build') {
             steps {
+                sh "mkdir -p ${PDATA}"
+                sh "rm -rf ${PDATA}/mongo-scripts"
+                sh "mv ./mongo/mongo-scripts ${PDATA}/mongo-scripts"
                 sh "make docker-build"
             }
         }
