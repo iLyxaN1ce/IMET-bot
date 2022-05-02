@@ -7,7 +7,10 @@ docker-app-build:
 docker-mongo-build:
 	docker build mongo -t aapozd/imet-mongo:latest 
 
-docker-build: docker-app-build docker-mongo-build
+docker-initiator-build:
+	docker build mongoinit -t aapozd/imet-init:latest
+
+docker-build: docker-app-build docker-mongo-build docker-initiator-build
 
 docker-compose-up:
 	docker-compose -f docker-compose.yml up -d
@@ -15,4 +18,5 @@ docker-compose-up:
 docker-push:
 	docker push aapozd/imet-bot:latest
 	docker push aapozd/imet-mongo:latest
+	docker push aapozd/imet-init:latest
 

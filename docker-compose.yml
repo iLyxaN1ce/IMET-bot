@@ -20,4 +20,11 @@ services:
             TOKEN: ${TOKEN}
             MONGO_PWD: ${MONGO_PWD}
             DB_IP: imetmongo
+    imetinit:
+        container_name: imetinit
+        image: aapozd/imet-init
+        environment:
+            MONGO_USER: aapozd
+            MONGO_PWD: ${MONGO_PWD}
+            DB_IP: imetmongo
 

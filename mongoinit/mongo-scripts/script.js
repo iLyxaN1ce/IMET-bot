@@ -10,7 +10,8 @@ const contingent = require('./contingent');
 var bachelorContingent = contingent.bachelorContingent;
 var masterContingent = contingent.masterContingent;
 
-const URL = "mongodb://172.21.0.2:27017/imet-db";
+const DB_IP = process.env.DB_IP;
+const URL = `mongodb://${DB_IP}:27017/imet-db`;
 
 var options = {
    user: process.env.MONGO_USER,
@@ -27,8 +28,6 @@ async function updateCommands(db) {
       } else {
          console.log("No collection commands");
       }
-   }).catch(err => {
-      console.log(err);
    }).then(() => {
       console.log("Inserting commands");
       commandsArray = getCommandsArray(bachelorContingent, masterContingent);
@@ -45,8 +44,6 @@ async function updateEmployees(db) {
       } else {
          console.log("No collection employees");
       }
-   }).catch(err => {
-      console.log(err);
    }).then(() => {
       console.log("Inserting employees");
       const employeesArray = [bachelorContingent, masterContingent];
@@ -58,16 +55,15 @@ async function main() {
    try {
       console.log("Connecting to database");
       await mongoose.connect(URL, options);
+      const db = mongoose.connection.db;
+      Promise.all([updateCommands(db), updateEmployees(db)]).then(() => {
+         console.log("All promises resolved, exit")
+         process.exit(0);
+      });
    } catch (error) {
-      handleError(error);
+      console.error(error);
+      process.exit(1);
    }
-
-   const db = mongoose.connection.db;
-
-   Promise.all([updateCommands(db), updateEmployees(db)]).then(() => {
-      console.log("All promises resolved, exit")
-      process.exit(0);
-   });
 }
 
 main();
