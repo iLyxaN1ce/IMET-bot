@@ -13,6 +13,7 @@ services:
             MONGO_PWD: ${MONGO_PWD}
         volumes:
             - ${PDATA}/db:/data/db
+            - ${PDATA}/init:/docker-entrypoint-initdb.d
     imetbot:
         container_name: imetbot
         image: aapozd/imet-bot:latest

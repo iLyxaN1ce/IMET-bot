@@ -11,6 +11,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh "mkdir -p ${PDATA}"
+                sh "rm -rf ${PDATA}/init"
+                sh "mv ./mongo/init ${PDATA}/init"
                 sh "make docker-build"
             }
         }
