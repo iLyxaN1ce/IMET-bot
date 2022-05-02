@@ -1,9 +1,8 @@
 package com.imet_bot.bot;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.imet_bot.entities.Command;
 import com.imet_bot.command.CommandRepository;
-import lombok.SneakyThrows;
+import com.imet_bot.entities.Command;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
