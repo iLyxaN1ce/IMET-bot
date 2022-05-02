@@ -1,3 +1,6 @@
+mongo-init:
+	node mongo/mongo-scripts/script.js
+
 docker-app-build:
 	docker build application -t aapozd/imet-bot:latest
 
