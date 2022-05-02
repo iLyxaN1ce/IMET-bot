@@ -10,7 +10,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "make mongo-init"
                 sh "mkdir -p ${PDATA}"
                 sh "make docker-build"
             }
