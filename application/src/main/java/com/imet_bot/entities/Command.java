@@ -10,11 +10,12 @@ import org.bson.json.JsonObject;
 import org.bson.json.JsonReader;
 import org.json.JSONObject;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.StringReader;
 import java.util.List;
 
-
+@Document(collection = "commands")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Command {
     @Getter
