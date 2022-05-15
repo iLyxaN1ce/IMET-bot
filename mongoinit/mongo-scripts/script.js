@@ -1,14 +1,27 @@
 var mongoose = require('mongoose');
 
-var getCommandsArray = require('./commands');
-
 const models = require('./models');
-var CommandModel = models.commandModel;
-var EmployeesModel = models.employeeModel;
+var KeyboardMarkupModel = models.keyboardMarkupModel;
+var KeyboardButtonModel = models.keyboardButtonModel;
+var StaffModel = models.staffModel;
 
-const contingent = require('./contingent');
-var bachelorContingent = contingent.bachelorContingent;
-var masterContingent = contingent.masterContingent;
+const keyboardMarkups = require('./keyboardMarkups');
+var startKeyboard = keyboardMarkups.startKeyboard;
+var staffKeyboard = keyboardMarkups.staffKeyboard;
+var documentsKeyboard = keyboardMarkups.documentsKeyboard;
+
+const keyboardButtons = require('./keyboardButtons');
+var staffButton = keyboardButtons.staffButton;
+var documentsButton = keyboardButtons.documentsButton;
+var helpButton = keyboardButtons.helpButton;
+var bachelorButton = keyboardButtons.bachelorButton;
+var masterButton = keyboardButtons.masterButton;
+var internationalButton = keyboardButtons.internationalButton;
+var lkButton = keyboardButtons.lkButton;
+
+const staffs = require('./staffs');
+var bachelorStaff = staffs.bachelorStaff;
+var masterStaff = staffs.masterStaff;
 
 const DB_IP = process.env.DB_IP;
 const URL = `mongodb://${DB_IP}:27017/imet-db`;
@@ -19,44 +32,73 @@ var options = {
    connectTimeoutMS: 60000
 }
 
-async function updateCommands(db) {
-   console.log("Updating commands")
-   return db.listCollections({ name: 'commands' }).toArray().then(arr => {
+async function updateKeyboards(db) {
+   console.log("Updating keyboards");
+   return db.listCollections({ name: 'keyboards' }).toArray().then(arr => {
       if (arr.length != 0) {
-         console.log("Dropping commands");
-         return db.dropCollection("commands")
+         console.log("Dropping keyboards");
+         return db.dropCollection("keyboards")
       } else {
-         console.log("No collection commands");
+         console.log("No collection keyboards");
       }
    }).then(() => {
-      console.log("Inserting commands");
-      commandsArray = getCommandsArray(bachelorContingent, masterContingent);
-      return CommandModel.insertMany(commandsArray);
+      console.log("Inserting keyboards");
+      return KeyboardMarkupModel.insertMany([
+          startKeyboard,
+          staffKeyboard,
+          documentsKeyboard
+      ])
    });
 }
 
-async function updateEmployees(db) {
-   console.log("Updating employees");
-   return db.listCollections({ name: 'employees' }).toArray().then(arr => {
+async function updateButtons(db) {
+   console.log("Updating keyboard buttons")
+   return db.listCollections({ name: 'buttons' }).toArray().then(arr => {
       if (arr.length != 0) {
-         console.log("Dropping employees");
-         return db.dropCollection("employees")
+         console.log("Dropping buttons");
+         return db.dropCollection("buttons")
       } else {
-         console.log("No collection employees");
+         console.log("No collection buttons");
       }
    }).then(() => {
-      console.log("Inserting employees");
-      const employeesArray = [bachelorContingent, masterContingent];
-      return EmployeesModel.insertMany(employeesArray)
+      console.log("Inserting buttons");
+      return KeyboardButtonModel.insertMany([
+         staffButton,
+         documentsButton,
+         helpButton,
+         bachelorButton,
+         masterButton,
+         internationalButton,
+         lkButton
+      ]);
    });
 }
+
+async function updateStaffs(db) {
+   console.log("Updating staffs");
+   return db.listCollections({ name: 'staffs' }).toArray().then(arr => {
+      if (arr.length != 0) {
+         console.log("Dropping staffs");
+         return db.dropCollection("staffs")
+      } else {
+         console.log("No collection staffs");
+      }
+   }).then(() => {
+      console.log("Inserting staffs");
+      return StaffModel.insertMany([
+          bachelorStaff,
+          masterStaff
+      ])
+   });
+}
+
 
 async function main() {
    try {
       console.log("Connecting to database");
       await mongoose.connect(URL, options);
       const db = mongoose.connection.db;
-      Promise.all([updateCommands(db), updateEmployees(db)]).then(() => {
+      Promise.all([updateKeyboards(db), updateButtons(db), updateStaffs(db)]).then(() => {
          console.log("All promises resolved, exit")
          process.exit(0);
       });
