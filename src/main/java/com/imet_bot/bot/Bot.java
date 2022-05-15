@@ -119,7 +119,6 @@ public class Bot extends TelegramLongPollingBot {
         reply.setChatId(String.valueOf(query.getMessage().getChatId()));
 
         String buttonDataName = query.getData();
-        System.out.println(buttonDataName);
         ButtonData buttonData = buttonDataRepository.findButtonDataByName(buttonDataName).get();
         if (buttonData.getResponseType().equals("Keyboard")) {
             String keyboardName = buttonData.getResponseBody();
