@@ -18,7 +18,7 @@ const keyboardButtonSchema = new Schema({
 const dataSchema = new Schema({
   name: String,
   responseType: String,
-  responseBody: String
+  responseBody: Mixed
 })
 
 const staffSchema = new Schema({

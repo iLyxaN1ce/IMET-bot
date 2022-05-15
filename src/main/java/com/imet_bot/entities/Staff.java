@@ -6,33 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @Document(collection = "staffs")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Staff {
-    private String address;
-    private String contacts;
-    private String email;
-    private String fullName;
-    private String position;
+    private List<Employee> employees;
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append("Полное имя: ")
-                .append(fullName)
-                .append("\n")
-                .append("Должность: ")
-                .append(position)
-                .append("\n")
-                .append("Телефон: ")
-                .append(contacts)
-                .append("\n")
-                .append("Электронная почта: ")
-                .append(email)
-                .append("\n");
+        employees
+                .stream()
+                .forEach(e -> stringBuilder.append(e.toString() + '\n'));
 
         return stringBuilder.toString();
     }

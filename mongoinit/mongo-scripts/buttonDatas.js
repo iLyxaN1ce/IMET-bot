@@ -1,3 +1,5 @@
+const {bachelorStaff, masterStaff} = require("./staffs");
+
 const staffData = {
     "name": "staffData",
     "responseType": "Keyboard",
@@ -19,13 +21,13 @@ const helpData = {
 const bachelorData = {
     "name": "bachelorData",
     "responseType": "Staff",
-    "responseBody": "bachelorStaff"
+    "responseBody": bachelorStaff
 }
 
 const masterData = {
     "name": "masterData",
     "responseType": "Staff",
-    "responseBody": "masterStaff"
+    "responseBody": masterStaff
 }
 
 const internationalData = {
