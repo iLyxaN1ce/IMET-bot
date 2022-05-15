@@ -6,50 +6,43 @@ var masterStaff = require('./staffs');
 const staffButton = {
     "name": "/staff",
     "label": "Персонал",
-    "responseType": "Keyboard",
-    "responseBody": staffKeyboard
+    "data": "staffData"
 }
 
 const documentsButton = {
     "name": "/documents",
     "label": "Документы",
-    "responseType": "Keyboard",
-    "responseBody": documentsKeyboard
+    "data": "documentsData"
 }
 
 const helpButton = {
     "name": "/help",
     "label": "Помощь",
-    "responseType": "String",
-    "responseBody": "Привет! Я бот ИПМЭиТ и я готов ответить на твои вопросы! Напиши /help, чтобы узнать, что я умею"
+    "data": "helpData"
 }
 
 const bachelorButton = {
     "name": "/b",
     "label": "Бакалавриат",
-    "responseType": "Staff",
-    "responseBody": bachelorStaff
+    "data": "bachelorData"
 }
 
 const masterButton = {
     "name": "/m",
     "label": "Магистратура",
-    "responseType": "Staff",
-    "responseBody": masterStaff
+    "data": "masterData"
 }
 
 const internationalButton = {
     "name": "/international",
     "label": "Международная деятельность",
-    "responseType": "String",
-    "responseBody": "https://imet.spbstu.ru/mezhdunarodnaya_deyatelnost/"
+    "data": "internationalData"
 }
 
 const lkButton = {
     "name": "/lk",
     "label": "Личный кабинет",
-    "responseType": "String",
-    "responseBody": "https://dep.spbstu.ru/userfiles/files/prev/docs/general/reglament_lko_2018.pdf"
+    "data": "lkData"
 }
 
 module.exports = {

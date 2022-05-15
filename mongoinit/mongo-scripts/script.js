@@ -4,6 +4,7 @@ const models = require('./models');
 var KeyboardMarkupModel = models.keyboardMarkupModel;
 var KeyboardButtonModel = models.keyboardButtonModel;
 var StaffModel = models.staffModel;
+var DataModel = models.dataModel;
 
 const keyboardMarkups = require('./keyboardMarkups');
 var startKeyboard = keyboardMarkups.startKeyboard;
@@ -19,6 +20,9 @@ var masterButton = keyboardButtons.masterButton;
 var internationalButton = keyboardButtons.internationalButton;
 var lkButton = keyboardButtons.lkButton;
 
+const buttonDatas = require('./buttonDatas');
+var buttonDatasArray = buttonDatas.buttonDatasArray;
+
 const staffs = require('./staffs');
 var bachelorStaff = staffs.bachelorStaff;
 var masterStaff = staffs.masterStaff;
@@ -32,17 +36,17 @@ var options = {
    connectTimeoutMS: 60000
 }
 
-async function updateKeyboards(db) {
-   console.log("Updating keyboards");
-   return db.listCollections({ name: 'keyboards' }).toArray().then(arr => {
+async function updateMarkups(db) {
+   console.log("Updating markups");
+   return db.listCollections({ name: 'markups' }).toArray().then(arr => {
       if (arr.length != 0) {
-         console.log("Dropping keyboards");
-         return db.dropCollection("keyboards")
+         console.log("Dropping markups");
+         return db.dropCollection("markups")
       } else {
-         console.log("No collection keyboards");
+         console.log("No collection markups");
       }
    }).then(() => {
-      console.log("Inserting keyboards");
+      console.log("Inserting markups");
       return KeyboardMarkupModel.insertMany([
           startKeyboard,
           staffKeyboard,
@@ -74,6 +78,21 @@ async function updateButtons(db) {
    });
 }
 
+async function updateDatas(db) {
+   console.log("Updating datas")
+   return db.listCollections({ name: 'datas' }).toArray().then(arr => {
+      if (arr.length != 0) {
+         console.log("Dropping datas");
+         return db.dropCollection("datas")
+      } else {
+         console.log("No collection datas");
+      }
+   }).then(() => {
+      console.log("Inserting datas");
+      return DataModel.insertMany(buttonDatasArray);
+   });
+}
+
 async function updateStaffs(db) {
    console.log("Updating staffs");
    return db.listCollections({ name: 'staffs' }).toArray().then(arr => {
@@ -98,7 +117,7 @@ async function main() {
       console.log("Connecting to database");
       await mongoose.connect(URL, options);
       const db = mongoose.connection.db;
-      Promise.all([updateKeyboards(db), updateButtons(db), updateStaffs(db)]).then(() => {
+      Promise.all([updateMarkups(db), updateButtons(db), updateDatas(db),updateStaffs(db)]).then(() => {
          console.log("All promises resolved, exit")
          process.exit(0);
       });

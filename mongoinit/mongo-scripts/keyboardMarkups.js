@@ -1,4 +1,6 @@
 const startKeyboard = {
+    "text": "Привет! Я бот ВШПМ ИПМЭиТ",
+    "name": "startKeyboard",
     "buttons": [
         "/staff",
         "/documents",
@@ -7,6 +9,8 @@ const startKeyboard = {
 }
 
 const staffKeyboard = {
+    "text": "Выбери интересующий тебя список сотрудников",
+    "name": "staffKeyboard",
     "buttons": [
         "/b",
         "/m"
@@ -14,6 +18,8 @@ const staffKeyboard = {
 }
 
 const documentsKeyboard = {
+    "text": "Выбери необходимый тебе документ",
+    "name": "documentsKeyboard",
     "buttons": [
         "/international",
         "/lk"
