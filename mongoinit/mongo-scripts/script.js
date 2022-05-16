@@ -15,10 +15,6 @@ var buttonsArray = keyboardButtons.buttonsArray
 const buttonDatas = require('./buttonDatas');
 var buttonDatasArray = buttonDatas.buttonDatasArray;
 
-const staffs = require('./staffs');
-const {staffModel} = require("./models");
-var staffsArray = staffs.staffsArray;
-
 const DB_IP = process.env.DB_IP;
 const URL = `mongodb://${DB_IP}:27017/imet-db`;
 

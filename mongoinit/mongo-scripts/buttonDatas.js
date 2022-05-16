@@ -6,10 +6,22 @@ const staffData = {
     "responseBody": "staffKeyboard"
 }
 
+const backStaffData = {
+    "name": "backStaffData",
+    "responseType": "Keyboard",
+    "responseBody": "startKeyboard"
+}
+
 const documentsData = {
     "name": "documentsData",
     "responseType": "Keyboard",
     "responseBody": "documentsKeyboard"
+}
+
+const backDocumentsData = {
+    "name": "backDocumentsData",
+    "responseType": "Keyboard",
+    "responseBody": "startKeyboard"
 }
 
 const helpData = {
@@ -50,6 +62,8 @@ module.exports = {
         bachelorData,
         masterData,
         internationalData,
-        lkData
+        lkData,
+        backStaffData,
+        backDocumentsData
     ]
 }

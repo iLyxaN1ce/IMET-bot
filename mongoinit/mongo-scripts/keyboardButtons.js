@@ -9,10 +9,22 @@ const staffButton = {
     "data": "staffData"
 }
 
+const backStaffButton = {
+    "name": "/backStaff",
+    "label": "Назад",
+    "data": "backStaffData"
+}
+
 const documentsButton = {
     "name": "/documents",
     "label": "Документы",
     "data": "documentsData"
+}
+
+const backDocumentsButton = {
+    "name": "/backDocuments",
+    "label": "Назад",
+    "data": "backDocumentsData"
 }
 
 const helpButton = {
@@ -53,6 +65,8 @@ module.exports = {
         bachelorButton,
         masterButton,
         internationalButton,
-        lkButton
+        lkButton,
+        backStaffButton,
+        backDocumentsButton
     ]
 }

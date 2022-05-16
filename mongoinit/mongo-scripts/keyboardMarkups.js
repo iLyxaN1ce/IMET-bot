@@ -13,7 +13,8 @@ const staffKeyboard = {
     "name": "staffKeyboard",
     "buttons": [
         "/b",
-        "/m"
+        "/m",
+        "/backStaff"
     ]
 }
 
@@ -22,7 +23,8 @@ const documentsKeyboard = {
     "name": "documentsKeyboard",
     "buttons": [
         "/international",
-        "/lk"
+        "/lk",
+        "/backDocuments"
     ]
 }
 
