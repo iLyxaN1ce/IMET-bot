@@ -13,6 +13,7 @@ import java.util.List;
 @Document(collection = "staffs")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Staff {
+    private String name;
     private List<Employee> employees;
 
     @Override

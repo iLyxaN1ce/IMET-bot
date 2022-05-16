@@ -1,7 +1,6 @@
 package com.imet_bot.bot;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imet_bot.entities.ButtonData;
 import com.imet_bot.entities.KeyboardButton;
@@ -27,7 +26,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class Bot extends TelegramLongPollingBot {
@@ -77,7 +75,6 @@ public class Bot extends TelegramLongPollingBot {
         for (String keyboardButton : dbKeyboardMarkup.getButtons()) {
             KeyboardButton dbButton = keyboardButtonRepository.getKeyboardButtonByName(keyboardButton).get();
             InlineKeyboardButton button = new InlineKeyboardButton(dbButton.getLabel());
-            System.out.println(dbButton.getData());
             button.setCallbackData(dbButton.getData());
             buttons.add(Collections.singletonList(button));
         }

@@ -143,6 +143,6 @@ const masterStaff = {
 }
 
 module.exports = {
-    bachelorStaff: bachelorStaff,
-    masterStaff: masterStaff
+    "bachelorStaff": bachelorStaff,
+    "masterStaff": masterStaff
 }

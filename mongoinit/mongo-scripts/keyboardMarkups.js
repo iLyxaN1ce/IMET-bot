@@ -27,7 +27,9 @@ const documentsKeyboard = {
 }
 
 module.exports = {
-    "startKeyboard": startKeyboard,
-    "staffKeyboard": staffKeyboard,
-    "documentsKeyboard": documentsKeyboard
+    "keyboardMarkupsArray": [
+        startKeyboard,
+        staffKeyboard,
+        documentsKeyboard
+    ]
 }

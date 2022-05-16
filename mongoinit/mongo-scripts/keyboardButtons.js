@@ -46,11 +46,13 @@ const lkButton = {
 }
 
 module.exports = {
-    "staffButton": staffButton,
-    "documentsButton": documentsButton,
-    "helpButton": helpButton,
-    "bachelorButton": bachelorButton,
-    "masterButton": masterButton,
-    "internationalButton": internationalButton,
-    "lkButton": lkButton
+    "buttonsArray": [
+        staffButton,
+        documentsButton,
+        helpButton,
+        bachelorButton,
+        masterButton,
+        internationalButton,
+        lkButton
+    ]
 }
