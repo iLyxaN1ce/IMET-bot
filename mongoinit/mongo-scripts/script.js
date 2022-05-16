@@ -1,14 +1,19 @@
 var mongoose = require('mongoose');
 
-var getCommandsArray = require('./commands');
-
 const models = require('./models');
-var CommandModel = models.commandModel;
-var EmployeesModel = models.employeeModel;
+var KeyboardMarkupModel = models.keyboardMarkupModel;
+var KeyboardButtonModel = models.keyboardButtonModel;
+var StaffModel = models.staffModel;
+var DataModel = models.dataModel;
 
-const contingent = require('./contingent');
-var bachelorContingent = contingent.bachelorContingent;
-var masterContingent = contingent.masterContingent;
+const keyboardMarkups = require('./keyboardMarkups');
+var keyboardMarkupsArray = keyboardMarkups.keyboardMarkupsArray;
+
+const keyboardButtons = require('./keyboardButtons');
+var buttonsArray = keyboardButtons.buttonsArray
+
+const buttonDatas = require('./buttonDatas');
+var buttonDatasArray = buttonDatas.buttonDatasArray;
 
 const DB_IP = process.env.DB_IP;
 const URL = `mongodb://${DB_IP}:27017/imet-db`;
@@ -19,35 +24,20 @@ var options = {
    connectTimeoutMS: 60000
 }
 
-async function updateCommands(db) {
-   console.log("Updating commands")
-   return db.listCollections({ name: 'commands' }).toArray().then(arr => {
+async function update(db, model, collectionName, documentsArray) {
+   console.log("Updating " + collectionName);
+   return db.listCollections({ name: collectionName }).toArray().then(arr => {
       if (arr.length != 0) {
-         console.log("Dropping commands");
-         return db.dropCollection("commands")
+         console.log("Dropping " + collectionName);
+         return db.dropCollection(collectionName);
       } else {
-         console.log("No collection commands");
+         console.log("No collection " + collectionName);
       }
    }).then(() => {
-      console.log("Inserting commands");
-      commandsArray = getCommandsArray(bachelorContingent, masterContingent);
-      return CommandModel.insertMany(commandsArray);
-   });
-}
-
-async function updateEmployees(db) {
-   console.log("Updating employees");
-   return db.listCollections({ name: 'employees' }).toArray().then(arr => {
-      if (arr.length != 0) {
-         console.log("Dropping employees");
-         return db.dropCollection("employees")
-      } else {
-         console.log("No collection employees");
-      }
-   }).then(() => {
-      console.log("Inserting employees");
-      const employeesArray = [bachelorContingent, masterContingent];
-      return EmployeesModel.insertMany(employeesArray)
+      console.log("Inserting " + collectionName);
+      return model.insertMany(documentsArray);
+   }).catch((e) => {
+      console.error(e);
    });
 }
 
@@ -56,7 +46,13 @@ async function main() {
       console.log("Connecting to database");
       await mongoose.connect(URL, options);
       const db = mongoose.connection.db;
-      Promise.all([updateCommands(db), updateEmployees(db)]).then(() => {
+
+      Promise.all([
+          update(db, KeyboardMarkupModel, "markups", keyboardMarkupsArray),
+          update(db, KeyboardButtonModel, "buttons", buttonsArray),
+          update(db, DataModel, "datas", buttonDatasArray),
+          ]
+      ).then(() => {
          console.log("All promises resolved, exit")
          process.exit(0);
       });

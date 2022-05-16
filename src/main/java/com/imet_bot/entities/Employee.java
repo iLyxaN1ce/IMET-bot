@@ -1,28 +1,19 @@
 package com.imet_bot.entities;
 
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Data
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Employee {
-    @Getter
     private String address;
-    @Getter
     private String contacts;
-    @Getter
     private String email;
-    @Getter
     private String fullName;
-    @Getter
     private String position;
-
-    public Employee() {}
-
-    public Employee(String address, String contacts, String email, String fullName, String position) {
-        this.address = address;
-        this.contacts = contacts;
-        this.email = email;
-        this.fullName = fullName;
-        this.position = position;
-    }
 
     @Override
     public String toString() {
