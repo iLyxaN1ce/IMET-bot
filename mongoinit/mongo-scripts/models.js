@@ -3,14 +3,25 @@ var mongoose = require('mongoose');
 const Schema = require('mongoose').Schema;
 const Mixed = Schema.Types.Mixed;
 
-const commandSchema = new Schema({
+const keyboardMarkupSchema = new Schema({
+  name: String,
   text: String,
-  responseType: String,
-  responseBody: Mixed,
-  nextCommands: Array
+  buttons: Array
 });
 
-const employeesSchema = new Schema({
+const keyboardButtonSchema = new Schema({
+  name: String,
+  label: String,
+  data: String
+})
+
+const dataSchema = new Schema({
+  name: String,
+  responseType: String,
+  responseBody: Mixed
+})
+
+const staffSchema = new Schema({
   name: String,
   employees: {
     address: String,
@@ -21,10 +32,14 @@ const employeesSchema = new Schema({
   }
 })
 
-const CommandModel = mongoose.model("command", commandSchema);
-const EmployeeModel = mongoose.model("employees", employeesSchema);
+const KeyboardMarkupModel = mongoose.model("markup", keyboardMarkupSchema);
+const KeyboardButtonModel = mongoose.model("button", keyboardButtonSchema);
+const DataModel = mongoose.model("data", dataSchema)
+const StaffModel = mongoose.model("staff", staffSchema);
 
 module.exports = {
-  commandModel: CommandModel,
-  employeeModel: EmployeeModel
+  "keyboardMarkupModel": KeyboardMarkupModel,
+  "keyboardButtonModel": KeyboardButtonModel,
+  "staffModel": StaffModel,
+  "dataModel": DataModel
 }
