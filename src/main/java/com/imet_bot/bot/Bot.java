@@ -15,7 +15,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -110,10 +113,10 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     private void processCallbackQuery(CallbackQuery query) throws JsonProcessingException {
+        List<BotApiMethod> methods = new ArrayList<>();
+
         AnswerCallbackQuery answer = new AnswerCallbackQuery();
         answer.setCallbackQueryId(query.getId());
-        SendMessage reply = new SendMessage();
-        reply.setChatId(String.valueOf(query.getMessage().getChatId()));
 
         String buttonDataName = query.getData();
         ButtonData buttonData = buttonDataRepository.findButtonDataByName(buttonDataName).get();
@@ -121,23 +124,40 @@ public class Bot extends TelegramLongPollingBot {
             String keyboardName = buttonData.getResponseBody();
             KeyboardMarkup dbKeyboardMarkup = keyboardMarkupRepository.getKeyboardMarkupByName(keyboardName).get();
             InlineKeyboardMarkup keyboard = buildKeyboard(dbKeyboardMarkup);
-            reply.setText(dbKeyboardMarkup.getText());
-            reply.setReplyMarkup(keyboard);
+
+            EditMessageText newText = new EditMessageText();
+            newText.setMessageId(query.getMessage().getMessageId());
+            newText.setChatId(String.valueOf(query.getMessage().getChatId()));
+            newText.setReplyMarkup(keyboard);
+            newText.setText(dbKeyboardMarkup.getText());
+            methods.add(newText);
         } else if (buttonData.getResponseType().equals("Staff")) {
             ObjectMapper objectMapper = new ObjectMapper();
             Staff staff = objectMapper.readValue(buttonData.getResponseBody(), Staff.class);
-            reply.setText(staff.toString());
+
+            EditMessageText newText = new EditMessageText();
+            newText.setMessageId(query.getMessage().getMessageId());
+            newText.setChatId(String.valueOf(query.getMessage().getChatId()));
+            newText.setText(staff.toString());
+            newText.setReplyMarkup(query.getMessage().getReplyMarkup());
+
+            methods.add(newText);
         } else if (buttonData.getResponseType().equals("String")) {
-            reply.setText(buttonData.getResponseBody());
+            EditMessageText newText = new EditMessageText();
+            newText.setMessageId(query.getMessage().getMessageId());
+            newText.setChatId(String.valueOf(query.getMessage().getChatId()));
+            newText.setText(buttonData.getResponseBody());
+            newText.setReplyMarkup(query.getMessage().getReplyMarkup());
+            methods.add(newText);
         }
 
-        try {
-            execute(answer);
-            execute(reply);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-
+        methods.forEach((m) -> {
+            try {
+                execute(m);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void sendMsg(Message message, List<?> text) {
