@@ -2,6 +2,7 @@ mongo-init:
 	node mongo/mongo-scripts/script.js
 
 docker-app-build:
+	rm -rf ./application/src
 	mv -f ./src ./application/src
 	mv -f pom.xml ./application/pom.xml
 	docker build application -t aapozd/imet-bot:latest
